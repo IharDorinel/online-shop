@@ -1,0 +1,8 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.viewButton {
+  @include dimensions(140px, 43px);
+  background: $white;
+  border: 1px solid $border;
+}

@@ -1,0 +1,23 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.itemCardContent {
+  @include flex(flex, flex-start, space-between);
+  padding: 50px 0;
+  margin-top: 30px;
+  margin-right: 400px;
+
+  .miniImgCont {
+    @include flex(flex, center, center, column);
+
+    .miniImg {
+      @include dimensions(80px, 80px);
+      margin-bottom: 30px;
+    }
+  }
+
+  .itemCardImg {
+    @include dimensions(610px, 510px);
+    margin: 0 300px 0 100px;
+  }
+}

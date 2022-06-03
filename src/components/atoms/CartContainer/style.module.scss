@@ -1,0 +1,38 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.cart_container {
+  @include flex(flex, center, space-between);
+  @include dimensions(70px);
+  position: relative;
+
+  .currency_container {
+
+    .dollarImg {
+    }
+
+    .arrowImg {
+      margin-left: 10px;
+      margin-bottom: 5px;
+
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+  }
+
+  .cartImg {
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .countCircle {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+  }
+}

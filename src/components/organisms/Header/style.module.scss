@@ -1,0 +1,15 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.header {
+  @include flex(flex, center, space-between);
+
+  .headerLogo {
+    @include dimensions(40px, 40px);
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+}

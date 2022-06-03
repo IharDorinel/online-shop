@@ -1,0 +1,58 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.content {
+  margin-top: 80px;
+
+  .contentTitle {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 160%;
+    text-align: left;
+  }
+
+  .contentGallery {
+    @include flex(flex, center, space-between, '', wrap);
+    margin-top: 103px;
+
+    .contentGalleryItem {
+      position: relative;
+
+      .contentItem {
+        padding: 16px;
+
+        &:hover {
+          box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
+        }
+
+        .contentImg {
+          @include dimensions(355px, 330px);
+        }
+
+
+        .figContainer {
+          @include flex(flex, flex-start, center, column);
+          margin-top: 24px;
+
+          figcaption {
+            font-style: normal;
+            font-weight: 300;
+            font-size: 18px;
+            line-height: 160%;
+          }
+        }
+
+      }
+
+      .cartImg {
+        @include dimensions(52px, 52px);
+        position: absolute;
+        right: 20px;
+        bottom: 80px;
+        z-index: 9;
+      }
+    }
+
+  }
+}

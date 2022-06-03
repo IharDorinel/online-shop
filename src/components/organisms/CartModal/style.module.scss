@@ -1,0 +1,138 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+
+.cartModalContainer {
+  position: absolute;
+  right: 65px;
+  top: 78px;
+  padding: 32px 16px;
+  background-color: $white;
+  z-index: 9;
+
+  .cartModalTitleCont {
+    text-align: left;
+
+    .cartModalTitle1 {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 160%;
+    }
+
+    .cartModalTitle2 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 160%;
+    }
+  }
+
+  .cartItem {
+    margin-top: 32px;
+    margin-bottom: 10px;
+
+    .cartContent {
+      @include flex(flex, center, space-between);
+
+      .cartItemDescr {
+        @include flex(flex, flex-start, center, column);
+        margin-right: 20px;
+
+
+        .cartItemTitle {
+          font-style: normal;
+          font-weight: 300;
+          font-size: 16px;
+          line-height: 160%;
+        }
+
+        .cartItemPrice {
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 160%;
+          margin-top: 4px;
+        }
+      }
+
+      .paramSizeCont {
+        @include flex(flex, flex-start, center, column);
+        margin-top: 8px;
+
+        .sizeCont {
+          @include flex(flex, center, center);
+          margin-top: 8px;
+
+          & > div:not(:last-child) {
+            margin-right: 8px;
+          }
+
+          .size {
+            @include flex(flex, center, center);
+            @include dimensions(24px, 24px);
+            border: 1px solid $border;
+          }
+        }
+      }
+
+      .paramColorCont {
+        @include flex(flex, flex-start, center, column);
+        margin-top: 8px;
+
+        .colorCont {
+          @include flex(flex, center, center);
+          margin-top: 8px;
+
+          & > div:not(:last-child) {
+            margin-right: 8px;
+          }
+
+          .color {
+            @include dimensions(16px, 16px);
+            background-color: #D3D2D5;
+            margin-right: 8px;
+          }
+
+        }
+      }
+
+      .countImageCont {
+        @include flex(flex, center, center);
+
+        .countCont {
+          @include flex(flex, center, space-between, column);
+          @include dimensions('', 190px);
+
+          .cartModalPlusMinus {
+            @include dimensions(24px, 24px);
+          }
+        }
+
+        .cartImg {
+          @include dimensions(121px, 190px);
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+
+  .params {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .totalCont {
+    @include flex(flex, center, space-between);
+    margin-top: 32px;
+    width: 100%;
+  }
+
+  .cartButtons {
+    @include flex(flex, center, center);
+    margin-top: 32px;
+  }
+
+}

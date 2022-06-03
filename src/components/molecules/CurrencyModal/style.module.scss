@@ -1,0 +1,32 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.currencyCont {
+  @include dimensions(115px);
+  padding: 20px 0;
+  position: absolute;
+  right: 78px;
+  top: 65px;
+  box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
+
+  li {
+    list-style: none;
+  }
+
+  .currencyItem {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    padding: 8px 38px 8px 20px;
+  }
+
+  .currencyItemActive {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 160%;
+    padding: 8px 38px 8px 20px;
+    background: $grey;
+  }
+}

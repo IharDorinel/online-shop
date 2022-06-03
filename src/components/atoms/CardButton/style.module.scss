@@ -1,0 +1,15 @@
+@import './src/styles/variables.module';
+@import './src/styles/mixins.module';
+
+.cardButton {
+  @include dimensions(292px, 52px);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  background: $primary;
+  color: white;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+}

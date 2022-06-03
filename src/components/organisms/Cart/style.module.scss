@@ -1,0 +1,120 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+
+.cartContainer {
+  margin-top: 80px;
+
+  .cartTitle {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 23px;
+    text-align: left;
+  }
+
+  .cartItem {
+    margin-top: 32px;
+
+    .cartHr {
+      background: $hr;
+    }
+
+    .cartContent {
+      @include flex(flex, center, space-between);
+      margin-top: 24px;
+
+      .cartItemDescr {
+        @include flex(flex, flex-start, center, column);
+
+        .cartItemTitle {
+          font-style: normal;
+          font-weight: 600;
+          font-size: 30px;
+          line-height: 27px;
+        }
+
+        .cartItemType {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 30px;
+          line-height: 27px;
+          margin-top: 16px;
+        }
+
+        .cartItemPrice {
+          font-style: normal;
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 24px;
+          margin-top: 20px;
+        }
+      }
+
+      .paramSizeCont {
+        @include flex(flex, flex-start, center, column);
+        margin-top: 20px;
+
+        .sizeCont {
+          @include flex(flex, center, center);
+          margin-top: 7px;
+
+          .size {
+            @include flex(flex, center, center);
+            @include dimensions(63px, 45px);
+            border: 1px solid $border;
+            margin-right: 12px;
+          }
+        }
+      }
+
+      .paramColorCont {
+        @include flex(flex, flex-start, center, column);
+        margin-top: 16px;
+
+        .colorCont {
+          @include flex(flex, center, center);
+          margin-top: 10px;
+
+          .color {
+            @include dimensions(32px, 32px);
+            background-color: #D3D2D5;
+            margin-right: 8px;
+          }
+
+        }
+      }
+
+      .countImageCont {
+        @include flex(flex, center, center);
+        position: relative;
+
+        .countCont {
+          @include flex(flex, center, space-between, column);
+          @include dimensions('', 290px);
+        }
+
+        .cartImg {
+          @include dimensions(200px, 290px);
+          margin-left: 24px;
+        }
+
+        .arrowCont {
+          @include flex(flex, center, space-between);
+          @include dimensions(56px);
+          position: absolute;
+          right: 15px;
+          bottom: 15px;
+
+          .arrow {
+            @include dimensions(24px, 24px);
+          }
+        }
+      }
+    }
+
+  }
+  }
+
+

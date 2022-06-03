@@ -1,0 +1,10 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.checkOutButton {
+  @include dimensions(140px, 43px);
+  color: $white;
+  background: $primary;
+  border: none;
+  margin-left: 12px;
+}
