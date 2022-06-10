@@ -12,16 +12,16 @@ export default class ItemCard extends Component {
   }
 
   render() {
+    console.log(this.props.item)
     return (
         <div className={styles.itemCardContent}>
           <div className={styles.miniImgCont}>
-            <img src={image} className={styles.miniImg} alt={image} />
-            <img src={image} className={styles.miniImg} alt={image} />
-            <img src={image} className={styles.miniImg} alt={image} />
+            {this.props.item[0]?.gallery?.map(item => (
+            <img src={item} key={item} className={styles.miniImg} alt={image} />
+                ))}
           </div>
-          <img src={image} className={styles.itemCardImg} alt={image} />
-          <ItemCardDescription/>
-        </div>
+          <img src={this.props.item[0].gallery[0]} className={styles.itemCardImg} alt={image} />
+          <ItemCardDescription content={this.props.item}/></div>
     )
   }
 }

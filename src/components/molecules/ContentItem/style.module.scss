@@ -1,0 +1,46 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+
+  .contentGalleryItem {
+    position: relative;
+
+    .contentItem {
+      padding: 16px;
+
+      &:hover {
+        box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
+      }
+
+      .contentImg {
+        @include dimensions(355px, 330px);
+        object-fit: cover;
+        object-position: center;
+      }
+
+
+      .figContainer {
+        @include flex(flex, flex-start, center, column);
+        margin-top: 24px;
+
+        figcaption {
+          font-style: normal;
+          font-weight: 300;
+          font-size: 18px;
+          line-height: 160%;
+        }
+      }
+
+    }
+
+    .cartImg {
+      @include dimensions(52px, 52px);
+      position: absolute;
+      right: 20px;
+      bottom: 80px;
+      z-index: 9;
+    }
+  }
+
+
+

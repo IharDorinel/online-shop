@@ -12,12 +12,14 @@
 
     .miniImg {
       @include dimensions(80px, 80px);
+      object-fit: cover;
       margin-bottom: 30px;
     }
   }
 
   .itemCardImg {
     @include dimensions(610px, 510px);
+    object-fit: cover;
     margin: 0 300px 0 100px;
   }
 }
