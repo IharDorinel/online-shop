@@ -9,6 +9,13 @@ import ItemCardDescription from "../../molecules/ItemCardDescription";
 export default class ItemCard extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      imgActive: this.props.item[0]?.gallery[0]
+    }
+  }
+
+  handleClick = (value) => {
+    this.setState({imgActive: value})
   }
 
   render() {
@@ -17,10 +24,14 @@ export default class ItemCard extends Component {
         <div className={styles.itemCardContent}>
           <div className={styles.miniImgCont}>
             {this.props.item[0]?.gallery?.map(item => (
-            <img src={item} key={item} className={styles.miniImg} alt={image} />
+            <img src={item} key={item} className={styles.miniImg} onClick={() => this.handleClick(item)} alt={image} />
                 ))}
           </div>
-          <img src={this.props.item[0].gallery[0]} className={styles.itemCardImg} alt={image} />
+          {this.props.item[0]?.gallery?.
+            filter(el => el === this.state.imgActive)
+              .map(item => (
+              <img src={item} key={item} className={styles.itemCardImg} alt={image} />
+          ))}
           <ItemCardDescription content={this.props.item}/></div>
     )
   }

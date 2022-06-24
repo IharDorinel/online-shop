@@ -6,6 +6,7 @@ import cart from "../../organisms/Header/images/Empty Cart.svg";
 import countCircle from './images/Rectangle 13.svg';
 import CurrencyModal from "../../molecules/CurrencyModal";
 import CartModal from "../../organisms/CartModal";
+import {store} from "../../../store";
 
 
 export default class CartContainer extends Component {
@@ -13,9 +14,7 @@ export default class CartContainer extends Component {
     super(props)
     this.state = {
       currModalVisible: false,
-      cartModalVisible: false,
       showCurrModal: this.showCurrModal.bind(this),
-      showCartModal: this.showCartModal.bind(this)
     }
   }
 
@@ -23,27 +22,31 @@ export default class CartContainer extends Component {
     this.setState({currModalVisible: !this.state.currModalVisible})
   }
 
-  showCartModal = () => {
-    this.setState({cartModalVisible: !this.state.cartModalVisible})
-  }
-
 
   render() {
+
+    const count = store.getState().cart.itemsInCart.reduce((acc, el) => el.quantity + acc, 0)
+
     return (
         <>
-        <div className={styles.cart_container}>
-          <div className={styles.currency_container}>
+        <div className={styles.cartContainer}>
+          <div className={styles.currencyContainer}>
             <img src={dollar} className={styles.dollarImg} alt={dollar} />
             <img src={arrow} className={styles.arrowImg} onClick={this.showCurrModal} alt={arrow} />
-          </div>
-          <img src={cart} className={styles.cartImg} onClick={this.showCartModal} alt={cart} />
+          </div >
+          <div onClick={this.props.handleClick}>
+          <img src={cart} className={styles.cartImg} onClick={this.props.showCartModal} alt={cart} />
+            <div className={styles.countCircleContainer}>
+              <p className={styles.cartCount}>{count}</p>
           <img src={countCircle} className={styles.countCircle} alt={countCircle} />
+            </div>
+          </div>
         </div>
           {this.state.currModalVisible &&
               <CurrencyModal/>
           }
-          {this.state.cartModalVisible &&
-              <CartModal/>
+          {this.props.cartModalVisible &&
+              <CartModal setCart={this.props.setCart}/>
           }
         </>
         )

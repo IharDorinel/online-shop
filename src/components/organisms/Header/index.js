@@ -16,7 +16,7 @@ export default class Header extends Component {
         <section className={styles.header}>
           <Categories/>
           <img src={logo} className={styles.headerLogo} alt={logo} />
-          <CartContainer/>
+          <CartContainer showCartModal={this.props.showCartModal} cartModalVisible={this.props.cartModalVisible} setCart={this.props.setCart}/>
         </section>
     )
   }

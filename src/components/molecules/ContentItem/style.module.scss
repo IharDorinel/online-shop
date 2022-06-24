@@ -5,6 +5,10 @@
   .contentGalleryItem {
     position: relative;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     .contentItem {
       padding: 16px;
 
@@ -42,5 +46,34 @@
     }
   }
 
+.contentGalleryOutItem {
+  opacity: 0.5;
+  position: relative;
 
+
+  .contentItem {
+    padding: 16px;
+
+    .contentImg {
+      @include dimensions(355px, 330px);
+      object-fit: cover;
+      object-position: center;
+    }
+
+
+    .figContainer {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 24px;
+
+      figcaption {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 160%;
+      }
+    }
+
+  }
+
+}
 

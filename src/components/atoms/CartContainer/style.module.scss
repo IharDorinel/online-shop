@@ -1,14 +1,15 @@
 @import './src/styles/mixins.module';
 @import './src/styles/variables.module';
 
-.cart_container {
+.cartContainer {
   @include flex(flex, center, space-between);
   @include dimensions(70px);
   position: relative;
 
-  .currency_container {
+  .currencyContainer {
 
     .dollarImg {
+
     }
 
     .arrowImg {
@@ -30,9 +31,22 @@
     }
   }
 
-  .countCircle {
+  .countCircleContainer {
     position: absolute;
     right: -10px;
     top: -10px;
+
+    .cartCount {
+      font-size: 12px;
+      position: absolute;
+      right: 6px;
+      top: 3px;
+      color: white;
+      }
+
+    .countCircle {
+
+    }
   }
+
 }

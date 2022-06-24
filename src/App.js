@@ -7,6 +7,7 @@ import {gql} from "@apollo/client";
 import {Component} from "react";
 import {Query} from "@apollo/client/react/components";
 import {graphql} from "@apollo/client/react/hoc";
+import {store} from "./store";
 
 
 const QUERY = gql`
@@ -50,8 +51,14 @@ class App extends Component {
       id: '',
       contentVisible: true,
       itemCardVisible: false,
+      cartVisible: false,
+      cartModalVisible: false,
+      isCartOpen: true,
+      setCart: this.setCart.bind(this),
+      showCartModal: this.showCartModal.bind(this)
     }
   }
+
 
   setId = (value) => {
     this.setState({id: value})
@@ -59,11 +66,19 @@ class App extends Component {
     this.setState({itemCardVisible: true})
   }
 
+  setCart = () => {
+   this.setState({contentVisible: false})
+   this.setState({cartVisible: true})
+   this.setState({cartModalVisible: false})
+  }
 
+  showCartModal = () => {
+    this.setState({cartModalVisible: !this.state.cartModalVisible})
+  }
 
 
 render() {
-console.log(this.state.id)
+
     return (
         <Query query={QUERY}>
           {({ data, loading, error }) => {
@@ -73,9 +88,10 @@ console.log(this.state.id)
             let foundCard = data.categories.filter(el => el.name === 'all').map(item => (
                 item.products.find(el => el.id === this.state.id)))
 
+
             return (
                 <div className={styles.main}>
-                  <Header/>
+                  <Header showCartModal={this.state.showCartModal} cartModalVisible={this.state.cartModalVisible} setCart={this.setCart}/>
                   {this.state.contentVisible &&
                       <Content
                           content={data.categories}
@@ -85,7 +101,10 @@ console.log(this.state.id)
                   {this.state.itemCardVisible &&
                       <ItemCard item={foundCard}/>
                   }
-                  <Cart/>
+                  {this.state.cartVisible &&
+                      <Cart isCartOpen={this.state.isCartOpen}/>
+                  }
+
                 </div>
             )
           }}

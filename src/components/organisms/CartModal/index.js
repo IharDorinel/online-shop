@@ -5,6 +5,8 @@ import minus from "../Cart/images/minus-square.svg";
 import product from "../Cart/images/Product D.jpg";
 import ViewButton from "../../atoms/ViewButton";
 import CheckOutButton from "../../atoms/CheckOutButton";
+import {store} from "../../../store";
+import CartItem from "../../molecules/CartItem";
 
 
 export default class CartModal extends Component {
@@ -13,56 +15,41 @@ export default class CartModal extends Component {
   }
 
   render() {
+
+    const content = store.getState().cart.itemsInCart
+
+    const count = content.map(el => ({
+      id: el.id,
+      price: el.prices[0].amount,
+      quantity: el.quantity
+    }))
+
+    const totalCost = ((count.reduce((acc, el) => (((el.price * el.quantity + acc))), 0))* 1.21).toFixed(2)
+
+
     return (
+        <>
         <div className={styles.cartModalContainer}>
           <div className={styles.cartModalTitleCont}>
             <span className={styles.cartModalTitle1}>My Bag,</span>
             <span className={styles.cartModalTitle2}>&nbsp;3 items</span>
           </div>
-          <div className={styles.cartItem}>
-            <div className={styles.cartContent}>
-              <div className={styles.cartItemDescr}>
-                <div className={styles.cartItemTitle}>Apollo</div>
-                <div className={styles.cartItemTitle}>Running Short</div>
-                <div className={styles.cartItemPrice}>$50.00</div>
-                <div className={styles.paramSizeCont}>
-                  <div className={styles.params}>SIZE:</div>
-                  <div className={styles.sizeCont}>
-                    <div className={styles.size}>XS</div>
-                    <div className={styles.size}>S</div>
-                    <div className={styles.size}>M</div>
-                    <div className={styles.size}>L</div>
-                  </div>
-                </div>
-                <div className={styles.paramColorCont}>
-                  <div className={styles.params}>COLOR:</div>
-                  <div className={styles.colorCont}>
-                    <div className={styles.color}></div>
-                    <div className={styles.color}></div>
-                    <div className={styles.color}></div>
-                  </div>
-                </div>
-              </div>
+          {content.map(item => (
+              <CartItem key={item.id} item={item} count={count}/>
 
-              <div className={styles.countImageCont}>
-                <div className={styles.countCont}>
-                  <img src={plus} className={styles.cartModalPlusMinus} alt={plus} />
-                  <p>1</p>
-                  <img src={minus} className={styles.cartModalPlusMinus} alt={minus} />
-                </div>
-                <img src={product} className={styles.cartImg} alt={product} />
-              </div>
-            </div>
-          </div>
+          ))}
+
           <div className={styles.totalCont}>
           <span>Total</span>
-          <span>$200.00</span>
+          <span>{totalCost}</span>
           </div>
           <div className={styles.cartButtons}>
-          <ViewButton/>
+          <ViewButton setCart={this.props.setCart}/>
           <CheckOutButton/>
           </div>
         </div>
+          <div className={styles.cartModalShadow}/>
+        </>
     )
   }
 }

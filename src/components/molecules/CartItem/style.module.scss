@@ -1,0 +1,255 @@
+@import './src/styles/mixins.module';
+@import './src/styles/variables.module';
+
+.cartItem {
+  margin-top: 32px;
+
+  .cartHr {
+    background: $hr;
+  }
+
+  .cartContent {
+    @include flex(flex, center, space-between);
+    margin-top: 24px;
+
+    .cartItemDescr {
+      @include flex(flex, flex-start, center, column);
+
+      .cartItemTitle {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 27px;
+      }
+
+      .cartItemType {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 27px;
+        margin-top: 16px;
+      }
+
+      .cartItemPrice {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 24px;
+        margin-top: 20px;
+      }
+    }
+
+    .paramSizeCont {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 20px;
+
+      .sizeCont {
+        @include flex(flex, center, center);
+        margin-top: 7px;
+
+        .size {
+          @include flex(flex, center, center);
+          @include dimensions(63px, 45px);
+          border: 1px solid $border;
+          margin-right: 12px;
+          cursor: pointer;
+          user-select: none;
+        }
+
+        .activeSize {
+          @include flex(flex, center, center);
+          @include dimensions(63px, 45px);
+          border: 1px solid $border;
+          margin-right: 12px;
+          background-color: #1D1F22;
+          color: white;
+          cursor: pointer;
+          user-select: none;
+        }
+      }
+    }
+
+    .paramColorCont {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 16px;
+
+      .colorCont {
+        @include flex(flex, center, center);
+        margin-top: 10px;
+
+        .color {
+          @include dimensions(32px, 32px);
+          background-color: #D3D2D5;
+          margin-right: 8px;
+          cursor: pointer;
+        }
+
+        .activeColor {
+          @include dimensions(32px, 32px);
+          margin-right: 8px;
+          outline: 1px solid $primary;
+        }
+
+      }
+    }
+
+    .countImageCont {
+      @include flex(flex, center, center);
+      position: relative;
+
+      .countCont {
+        @include flex(flex, center, space-between, column);
+        @include dimensions('', 290px);
+
+        .plusMinus {
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .cartImg {
+        @include dimensions(200px, 290px);
+        margin-left: 24px;
+        object-fit: cover;
+      }
+
+      .arrowCont {
+        @include flex(flex, center, space-between);
+        @include dimensions(56px);
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+
+        .arrow {
+          @include dimensions(24px, 24px);
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+.cartModalItem {
+  margin-top: 32px;
+  margin-bottom: 10px;
+
+  .cartModalHr {
+    display: none;
+  }
+
+  .cartModalContent {
+    @include flex(flex, center, space-between);
+
+    .cartModalItemDescr {
+      @include flex(flex, flex-start, center, column);
+      margin-right: 20px;
+
+
+      .cartModalItemTitle {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 160%;
+      }
+
+      .cartModalItemPrice {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 160%;
+        margin-top: 4px;
+      }
+    }
+
+    .paramSizeCont {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 8px;
+
+      .sizeCont {
+        @include flex(flex, center, center);
+        margin-top: 8px;
+
+        & > div:not(:last-child) {
+          margin-right: 8px;
+        }
+
+        .size {
+          @include flex(flex, center, center);
+          @include dimensions(24px, 24px);
+          border: 1px solid $border;
+          cursor: pointer;
+        }
+
+        .activeSize {
+          @include flex(flex, center, center);
+          @include dimensions(24px, 24px);
+          border: 1px solid $border;
+          background-color: #1D1F22;
+          color: white;
+          cursor: pointer;
+          user-select: none;
+        }
+      }
+    }
+
+    .paramColorCont {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 8px;
+
+      .colorCont {
+        @include flex(flex, center, center);
+        margin-top: 8px;
+
+        & > div:not(:last-child) {
+          margin-right: 8px;
+        }
+
+        .color {
+          @include dimensions(16px, 16px);
+          margin-right: 8px;
+          cursor: pointer;
+        }
+
+        .activeColor {
+          @include dimensions(16px, 16px);
+          margin-right: 8px;
+          outline: 1px solid $primary;
+        }
+
+      }
+    }
+
+    .countModalImageCont {
+      @include flex(flex, center, center);
+
+      .countModalCont {
+        @include flex(flex, center, space-between, column);
+        @include dimensions('', 190px);
+
+        .cartModalPlusMinus {
+          @include dimensions(24px, 24px);
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .cartImg {
+        @include dimensions(121px, 190px);
+        margin-left: 8px;
+        object-fit: cover;
+      }
+
+      .arrowModalCont {
+      display: none;
+      }
+    }
+  }
+}
