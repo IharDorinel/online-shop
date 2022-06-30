@@ -13,6 +13,11 @@ const cartSlice = createSlice({
       localStorage.setItem('ID', JSON.stringify(state.itemsInCart))
     },
 
+    deleteItemsFromCart: (state, action) => {
+      state.itemsInCart = []
+      localStorage.removeItem('ID')
+    },
+
     increaseCount: (state, action) => {
       state.itemsInCart = state.itemsInCart.map(item => {
         if(item.id === action.payload) {
@@ -37,5 +42,5 @@ const cartSlice = createSlice({
   }
 })
 
-export const {setItemInCart, increaseCount, decreaseCount} = cartSlice.actions;
+export const {setItemInCart, deleteItemsFromCart, increaseCount, decreaseCount} = cartSlice.actions;
 export default cartSlice.reducer;

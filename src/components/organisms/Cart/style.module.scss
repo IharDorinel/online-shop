@@ -5,6 +5,13 @@
 .cartContainer {
   margin-top: 80px;
 
+  .cartBack {
+    top: 100px;
+    left: 40px;
+    text-decoration: underline;
+    position: absolute;
+  }
+
   .cartTitle {
     font-style: normal;
     font-weight: 700;

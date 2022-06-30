@@ -34,6 +34,17 @@
         @include dimensions(63px, 45px);
         border: 1px solid $border;
         margin-right: 12px;
+        cursor: pointer;
+      }
+
+      .activeSize {
+        @include flex(flex, center, center);
+        @include dimensions(63px, 45px);
+        border: 1px solid $border;
+        margin-right: 12px;
+        background-color: #1D1F22;
+        color: white;
+        user-select: none;
       }
     }
   }
@@ -49,6 +60,13 @@
       .color {
         @include dimensions(32px, 32px);
         margin-right: 8px;
+        cursor: pointer;
+      }
+
+      .activeColor {
+        @include dimensions(32px, 32px);
+        margin-right: 8px;
+        outline: 1px solid $primary;
       }
 
     }

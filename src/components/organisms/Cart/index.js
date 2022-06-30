@@ -17,7 +17,8 @@ export default class Cart extends Component {
 
     const count = content.map(el => ({
       id: el.id,
-      price: el.prices[0].amount,
+      price: el.prices.filter(el => el.currency.label === this.props.currency)[0].amount,
+      symbol: el.prices.filter(el => el.currency.label === this.props.currency)[0].currency.symbol,
       quantity: el.quantity
     }))
 
@@ -27,14 +28,16 @@ export default class Cart extends Component {
 
     const tax = (count.reduce((acc, el) => (((el.price * el.quantity + acc))), 0) * 0.21).toFixed(2)
 
+
     return (
         <div className={styles.cartContainer}>
+          <a href="/" className={styles.cartBack}>Home</a>
           <div className={styles.cartTitle}>CART</div>
                 {content.map(item => (
-                    <CartItem key={item.id} item={item} count={count} isCartOpen={this.props.isCartOpen}/>
+                    <CartItem key={item.id} item={item} currency={this.props.currency} symbol={count[0]?.symbol} count={count} isCartOpen={this.props.isCartOpen}/>
 
                 ))}
-          <TotalOrder totalQuantity={totalQuantity} totalCost={totalCost} tax={tax}/>
+          <TotalOrder totalQuantity={totalQuantity} totalCost={totalCost} tax={tax} symbol={count[0]?.symbol} closeCart={this.props.closeCart}/>
         </div>
     )
   }

@@ -15,7 +15,13 @@
   .contentGallery {
     @include flex(flex, center, space-between, '', wrap);
     margin-top: 103px;
+  }
 
-
+  .cartImg {
+    @include dimensions(52px, 52px);
+    position: absolute;
+    right: 20px;
+    bottom: 80px;
+    z-index: 9;
   }
 }

@@ -9,7 +9,6 @@ export default class TotalOrder extends Component {
   render() {
 
 
-
     return (
        <div className={styles.totalOrderCont}>
          <hr className={styles.cartHr}/>
@@ -24,10 +23,10 @@ export default class TotalOrder extends Component {
          </div>
          <div className={styles.textCont}>
            <span className={styles.totalOrderText}>Total:</span>
-           <span className={styles.totalOrderTextBold}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${this.props.totalCost}</span>
+           <span className={styles.totalOrderTextBold}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{this.props.symbol}{this.props.totalCost}</span>
          </div>
          </div>
-         <CartButton/>
+         <CartButton closeCart={this.props.closeCart}/>
        </div>
     )
   }

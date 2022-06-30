@@ -37,14 +37,15 @@
 
     }
 
-    .cartImg {
-      @include dimensions(52px, 52px);
-      position: absolute;
-      right: 20px;
-      bottom: 80px;
-      z-index: 9;
-    }
   }
+
+.cartImg {
+  @include dimensions(52px, 52px);
+  position: absolute;
+  right: 20px;
+  bottom: 80px;
+  z-index: 9;
+}
 
 .contentGalleryOutItem {
   opacity: 0.5;

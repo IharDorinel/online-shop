@@ -67,7 +67,9 @@ export default class CartItem extends Component {
 
     const countGoods = this.props.count.filter(el => el.id === this.props.item.id)
 
-    const countCost = this.props.item.prices[0].amount * countGoods[0].quantity
+    const countCost = this.props.item.prices.filter(el => el.currency.label === this.props.currency)[0]?.amount
+
+
 
     return (
         <div className={this.props.isCartOpen ? styles.cartItem : styles.cartModalItem} key={this.props.item.id}>
@@ -77,7 +79,7 @@ export default class CartItem extends Component {
               <div className={this.props.isCartOpen ? styles.cartItemTitle : styles.cartModalItemTitle}>{this.props.item.brand}</div>
               <div className={this.props.isCartOpen ? styles.cartItemType : styles.cartModalItemType}>{this.props.item.name}</div>
               <div
-                  className={this.props.isCartOpen ? styles.cartItemPrice : styles.cartModalItemPrice}>{this.props.item.prices[0].currency.symbol}{countCost}</div>
+                  className={this.props.isCartOpen ? styles.cartItemPrice : styles.cartModalItemPrice}>{this.props.symbol}{countCost}</div>
               {arrSize &&
                   <div className={styles.paramSizeCont}>
                     <div className={styles.params}>SIZE:</div>
@@ -108,7 +110,7 @@ export default class CartItem extends Component {
                 <img src={minus} className={this.props.isCartOpen ? styles.plusMinus : styles.cartModalPlusMinus} onClick={this.decreaseGoods} alt={minus}/>
               </div>
               {this.props.item.gallery?.slice(this.state.start, this.state.end).map(item => (
-              <img src={item} className={styles.cartImg} alt={product}/>
+              <img src={item} className={styles.cartImg} alt={product} key={item}/>
               ))}
               <div className={this.props.isCartOpen ? styles.arrowCont : styles.arrowModalCont}>
                 <img src={leftArrow} className={styles.arrow} onClick={this.leftClick} alt={leftArrow}/>

@@ -21,20 +21,22 @@ export default class ContentItem extends Component {
     this.setState({cartImgVisible: !this.state.cartImgVisible})
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
+    if(e.nativeEvent.target.className.includes('style_cartImg')) return;
+
     if(this.props.item.inStock) {
       this.props.setId(this.state.id)
     }
   }
 
-  addToCart = () => {
+  addToCart = (e) => {
     store.dispatch(setItemInCart(this.props.item))
   }
 
 
-
   render() {
 
+const currentCurrency = this.props.item.prices.filter(el => el.currency.label === this.props.currency)
 
     return (
           <div className={this.props.item.inStock ? styles.contentGalleryItem : styles.contentGalleryOutItem} onMouseEnter={this.handleHover}
@@ -45,7 +47,7 @@ export default class ContentItem extends Component {
           <img src={this.props.item.gallery[0]} className={styles.contentImg} alt={this.props.item.name}/>
           <div className={styles.figContainer} >
             <figcaption>{this.props.item.name}</figcaption>
-            <figcaption>{this.props.item.prices[0].currency.symbol}{this.props.item.prices[0].amount}</figcaption>
+            <figcaption>{currentCurrency[0].currency.symbol}{currentCurrency[0].amount}</figcaption>
           </div>
         </figure>
             {this.state.cartImgVisible && this.props.item.inStock &&

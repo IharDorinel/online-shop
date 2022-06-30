@@ -5,11 +5,11 @@ import styles from './style.module.scss';
 import ContentItem from "../../molecules/ContentItem";
 
 
-
 export default class Content extends Component {
   constructor(props) {
     super(props)
   }
+
 
 
   render() {
@@ -22,11 +22,11 @@ export default class Content extends Component {
             {this.props.content.filter(el => el.name === 'all').map(item => (
                 item.products.map(item => (
                       <ContentItem item={item}
+                                   currency={this.props.currency}
                                    setId={this.props.setId}
                                    key={item.id}
                       />
                   ))
-
             ))}
 
           </div>

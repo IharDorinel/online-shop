@@ -10,7 +10,7 @@ export default class ItemCard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      imgActive: this.props.item[0]?.gallery[0]
+      imgActive: this.props.item[0]?.gallery[0],
     }
   }
 
@@ -18,10 +18,12 @@ export default class ItemCard extends Component {
     this.setState({imgActive: value})
   }
 
+
   render() {
     console.log(this.props.item)
     return (
         <div className={styles.itemCardContent}>
+          <a href="/" className={styles.itemCardBack}>Home</a>
           <div className={styles.miniImgCont}>
             {this.props.item[0]?.gallery?.map(item => (
             <img src={item} key={item} className={styles.miniImg} onClick={() => this.handleClick(item)} alt={image} />
@@ -32,7 +34,7 @@ export default class ItemCard extends Component {
               .map(item => (
               <img src={item} key={item} className={styles.itemCardImg} alt={image} />
           ))}
-          <ItemCardDescription content={this.props.item}/></div>
+          <ItemCardDescription content={this.props.item} currency={this.props.currency}/></div>
     )
   }
 }

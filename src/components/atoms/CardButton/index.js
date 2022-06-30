@@ -17,7 +17,6 @@ export class CardButton extends Component {
 
 
   handleClick = () => {
-    console.log(this.props.content)
     store.dispatch(setItemInCart(this.props.content))
   }
 

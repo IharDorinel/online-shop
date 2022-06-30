@@ -16,7 +16,10 @@ export default class Header extends Component {
         <section className={styles.header}>
           <Categories/>
           <img src={logo} className={styles.headerLogo} alt={logo} />
-          <CartContainer showCartModal={this.props.showCartModal} cartModalVisible={this.props.cartModalVisible} setCart={this.props.setCart}/>
+          <CartContainer currencies={this.props.currencies} currency={this.props.currency} currModalVisible={this.props.currModalVisible}
+                         setCurrency={this.props.setCurrency} showCartModal={this.props.showCartModal} showCurrModal={this.props.showCurrModal}
+                         cartModalVisible={this.props.cartModalVisible} closeCurrModal={this.props.closeCurrModal}
+                         closeCartModal={this.props.closeCartModal} setCart={this.props.setCart}/>
         </section>
     )
   }
