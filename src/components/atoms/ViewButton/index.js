@@ -1,6 +1,7 @@
 import {Component} from "react";
 import styles from "./style.module.scss";
 
+
 export default class ViewButton extends Component {
   constructor(props) {
     super(props)
@@ -10,7 +11,8 @@ export default class ViewButton extends Component {
   }
 
   handleClick = () => {
-    this.props.setCart()
+    const { setCart } = this.props
+    setCart()
   }
 
   render() {

@@ -3,7 +3,7 @@
 
 .cartContainer {
   @include flex(flex, center, space-between);
-  @include dimensions(70px);
+  @include dimensions(80px);
   position: relative;
 
   .currencyContainer {
@@ -35,6 +35,7 @@
     position: absolute;
     right: -10px;
     top: -10px;
+    cursor: pointer;
 
     .cartCount {
       font-size: 12px;

@@ -7,6 +7,15 @@
   margin-top: 30px;
   margin-right: 400px;
 
+  .itemCardBack {
+    top: 100px;
+    left: 40px;
+    text-decoration: underline;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+  }
+
   .miniImgCont {
     @include flex(flex, center, center, column);
 

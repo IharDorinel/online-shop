@@ -1,14 +1,22 @@
 import {Component} from "react";
-
-import styles from './style.module.scss';
-
-import plus from './images/plus-square.svg';
-import minus from './images/minus-square.svg';
-import product from './images/Product D.jpg';
-import leftArrow from './images/Group 1417.svg';
-import rightArrow from './images/Group 1418.svg';
+import plus from '../../../images/plus-square.svg';
+import minus from '../../../images/minus-square.svg';
+import leftArrow from '../../../images/Group 1417.svg';
+import rightArrow from '../../../images/Group 1418.svg';
+import cross from '../../../images/cross.png';
 import {store} from "../../../store";
-import {decreaseCount, increaseCount} from "../../../store/reducers/cartReducer";
+import {
+  decreaseCount,
+  removeItemFromCart,
+  increaseCount,
+  setNewActiveSize,
+  setNewActiveColor,
+  setNewActiveCapacity,
+  setNewActiveUSB,
+  setNewActiveID
+} from "../../../store/reducers/cartReducer";
+import {cardDescription} from "../../../utils/constants";
+import styles from './style.module.scss';
 
 
 export default class CartItem extends Component {
@@ -17,32 +25,35 @@ export default class CartItem extends Component {
     this.state = {
       start: 0,
       end: 1,
-      activeSize: '',
-      activeColor: '',
     }
   }
 
+
   increaseGoods = () => {
-    store.dispatch(increaseCount(this.props.item.id))
+    const { item } = this.props
+    store.dispatch(increaseCount(item.id))
   }
 
 
   decreaseGoods = () => {
-    store.dispatch(decreaseCount(this.props.item.id))
+    const { item } = this.props
+    store.dispatch(decreaseCount(item.id))
   }
 
   leftClick = () => {
+    const { item } = this.props
     if(this.state.start > 0) {
       this.setState({start: this.state.start - 1})
       this.setState({end: this.state.end - 1})
     } else {
-      this.setState({start: this.props.item.gallery.length - 2})
-      this.setState({end:this.props.item.gallery.length - 1})
+      this.setState({start: item.gallery.length - 2})
+      this.setState({end: item.gallery.length - 1})
     }
   }
 
   rightClick = () => {
-    if(this.state.end < this.props.item.gallery.length) {
+    const { item } = this.props
+    if(this.state.end < item.gallery.length) {
       this.setState({start: this.state.start + 1})
       this.setState({end: this.state.end + 1})
     } else {
@@ -51,69 +62,131 @@ export default class CartItem extends Component {
     }
   }
 
-  handleSizeClick = (value) => {
-    this.setState({activeSize: value})
+  handleSizeClick = (sizeId, itemId) => {
+   store.dispatch(setNewActiveSize({sizeId: sizeId, itemId: itemId}))
      }
 
-  handleColorClick = (value) => {
-    this.setState({activeColor: value})
+  handleColorClick = (colorId, itemId) => {
+   store.dispatch(setNewActiveColor({colorId: colorId, itemId: itemId}))
+  }
+
+  handleCapacityClick = (capId, itemId) => {
+    store.dispatch(setNewActiveCapacity({capId: capId, itemId: itemId}))
+  }
+
+  handleUSBClick = (USBId, itemId) => {
+    store.dispatch(setNewActiveUSB({USBId: USBId, itemId: itemId}))
+  }
+
+  handleIDClick = (IDId, itemId) => {
+    store.dispatch(setNewActiveID({IDId: IDId, itemId: itemId}))
+  }
+
+  deleteProduct = (item) => {
+    store.dispatch(removeItemFromCart(item))
   }
 
   render() {
+    const { item, count, currency, currSymbol, isCartOpen } = this.props
 
-    const arrSize = this.props.item.attributes.find(elem => elem.id === 'Size')
+    const arrSize = item.attributes.find(elem => elem.id === cardDescription.size)
 
-    const arrColor = this.props.item.attributes.find(elem => elem.id === 'Color')
+    const arrColor = item.attributes.find(elem => elem.id === cardDescription.color)
 
-    const countGoods = this.props.count.filter(el => el.id === this.props.item.id)
+    const arrCapacity = item.attributes.find(elem => elem.id === cardDescription.capacity)
 
-    const countCost = this.props.item.prices[0].amount * countGoods[0].quantity
+    const arrUSB = item.attributes.find(elem => elem.id === cardDescription.usb)
+
+    const arrID = item.attributes.find(elem => elem.id === cardDescription.id)
+
+    const countGoods = count.filter(el => el.id === item.id)
+
+    const countCost = item.prices.filter(el => el.currency.label === currency)[0]?.amount
+
+
 
     return (
-        <div className={this.props.isCartOpen ? styles.cartItem : styles.cartModalItem} key={this.props.item.id}>
-          <hr className={this.props.isCartOpen ? styles.cartHr : styles.cartModalHr}/>
-          <div className={this.props.isCartOpen ? styles.cartContent : styles.cartModalContent}>
-            <div className={this.props.isCartOpen ? styles.cartItemDescr : styles.cartModalItemDescr}>
-              <div className={this.props.isCartOpen ? styles.cartItemTitle : styles.cartModalItemTitle}>{this.props.item.brand}</div>
-              <div className={this.props.isCartOpen ? styles.cartItemType : styles.cartModalItemType}>{this.props.item.name}</div>
-              <div
-                  className={this.props.isCartOpen ? styles.cartItemPrice : styles.cartModalItemPrice}>{this.props.item.prices[0].currency.symbol}{countCost}</div>
+
+        <div className={isCartOpen ? styles.cartItem : styles.cartModalItem} key={item.id}>
+          <hr className={isCartOpen ? styles.cartHr : styles.cartModalHr}/>
+          <div className={isCartOpen ? styles.cartContent : styles.cartModalContent}>
+            <div className={isCartOpen ? styles.cartItemDescr : styles.cartModalItemDescr}>
+              <div className={isCartOpen ? styles.cartItemTitle : styles.cartModalItemTitle}>{item.brand}</div>
+              <div className={isCartOpen ? styles.cartItemType : styles.cartModalItemType}>{item.name}</div>
+              <div className={isCartOpen ? styles.cartItemPrice : styles.cartModalItemPrice}>{currSymbol}{countCost}</div>
               {arrSize &&
-                  <div className={styles.paramSizeCont}>
-                    <div className={styles.params}>SIZE:</div>
-                    <div className={styles.sizeCont}>
-                      {this.props.item.attributes[0]?.items.map(el => (
-                        <div className={this.state.activeSize === el.id ? styles.activeSize : styles.size} key={el.id}
-                        onClick={() => this.handleSizeClick(el.id)}>{el.value}</div>
+                  <div className={styles.paramAttrCont}>
+                    <div className={styles.params}>{cardDescription.size}:</div>
+                    <div className={styles.attrCont}>
+                      {item.attributes?.filter(el => el.name === cardDescription.size)[0].items.map(el => (
+                        <div className={item.activeSize === el.id ? styles.activeAttr : styles.attr} key={el.id}
+                        onClick={() => this.handleSizeClick(el.id, item.id)}>{el.value}</div>
                         ))}
                     </div>
                   </div>
               }
               {arrColor &&
               <div className={styles.paramColorCont}>
-                <div className={styles.params}>COLOR:</div>
+                <div className={styles.params}>{cardDescription.color}:</div>
                 <div className={styles.colorCont}>
-                  {this.props.item.attributes[0]?.items.map(el => (
-                  <div className={this.state.activeColor === el.id ? styles.activeColor : styles.color} style={{backgroundColor: el.value}} key={el.id}
-                       onClick={() => this.handleColorClick(el.id)}></div>
+                  {item.attributes?.filter(el => el.name === cardDescription.color)[0].items.map(el => (
+                  <div className={item.activeColor === el.id ? styles.activeColor : styles.color} style={{backgroundColor: el.value}} key={el.id}
+                       onClick={() => this.handleColorClick(el.id, item.id)}></div>
+                  ))}
+                </div>
+              </div>
+              }
+              {arrCapacity &&
+              <div className={styles.paramAttrCont}>
+                <div className={styles.params}>{cardDescription.capacity}:</div>
+                <div className={styles.attrCont}>
+                  {item.attributes?.filter(el => el.name === cardDescription.capacity)[0].items.map(el => (
+                      <div className={item.activeCapacity === el.id ? styles.activeAttr : styles.attr} style={{backgroundColor: el.value}} key={el.id}
+                           onClick={() => this.handleCapacityClick(el.id, item.id)}>{el.value}</div>
+                  ))}
+                </div>
+              </div>
+              }
+              {arrUSB &&
+              <div className={styles.paramAttrCont}>
+                <div className={styles.params}>{cardDescription.usb}:</div>
+                <div className={styles.attrCont}>
+                  {item.attributes?.filter(el => el.name === cardDescription.usb)[0].items.map(el => (
+                      <div className={item.activeUSB === el.id ? styles.activeAttr : styles.attr} style={{backgroundColor: el.value}} key={el.id}
+                           onClick={() => this.handleUSBClick(el.id, item.id)}>{el.value}</div>
+                  ))}
+                </div>
+              </div>
+              }
+              {arrID &&
+              <div className={styles.paramAttrCont}>
+                <div className={styles.params}>{cardDescription.id}:</div>
+                <div className={styles.attrCont}>
+                  {item.attributes?.filter(el => el.name === cardDescription.id)[0].items.map(el => (
+                      <div className={item.activeID === el.id ? styles.activeAttr : styles.attr} style={{backgroundColor: el.value}} key={el.id}
+                           onClick={() => this.handleIDClick(el.id, item.id)}>{el.value}</div>
                   ))}
                 </div>
               </div>
               }
             </div>
-            <div className={this.props.isCartOpen ? styles.countImageCont : styles.countModalImageCont}>
-              <div className={this.props.isCartOpen ? styles.countCont : styles.countModalCont}>
-                <img src={plus} className={this.props.isCartOpen ? styles.plusMinus : styles.cartModalPlusMinus} onClick={this.increaseGoods} alt={plus}/>
+            <div className={isCartOpen ? styles.countImageCont : styles.countModalImageCont}>
+              <img src={cross} className={isCartOpen ? styles.removeCross : styles.removeModalCross} onClick={() => this.deleteProduct(item)} alt={cross}/>
+              <div className={isCartOpen ? styles.countCont : styles.countModalCont}>
+                <img src={plus} className={isCartOpen ? styles.plusMinus : styles.cartModalPlusMinus} onClick={this.increaseGoods} alt={plus}/>
                 <p>{countGoods[0].quantity}</p>
-                <img src={minus} className={this.props.isCartOpen ? styles.plusMinus : styles.cartModalPlusMinus} onClick={this.decreaseGoods} alt={minus}/>
+                <img src={minus} className={isCartOpen ? styles.plusMinus : styles.cartModalPlusMinus} onClick={this.decreaseGoods} alt={minus}/>
               </div>
-              {this.props.item.gallery?.slice(this.state.start, this.state.end).map(item => (
-              <img src={item} className={styles.cartImg} alt={product}/>
+              {item.gallery?.slice(this.state.start, this.state.end).map(item => (
+              <img src={item} className={styles.cartImg} alt={item} key={item}/>
               ))}
-              <div className={this.props.isCartOpen ? styles.arrowCont : styles.arrowModalCont}>
-                <img src={leftArrow} className={styles.arrow} onClick={this.leftClick} alt={leftArrow}/>
-                <img src={rightArrow} className={styles.arrow} onClick={this.rightClick} alt={rightArrow}/>
-              </div>
+              {item.gallery?.length > 1 &&
+                <div className={isCartOpen ? styles.arrowCont : styles.arrowModalCont}>
+                  <img src={leftArrow} className={styles.arrow} onClick={this.leftClick} alt={leftArrow}/>
+                  <img src={rightArrow} className={styles.arrow} onClick={this.rightClick} alt={rightArrow}/>
+                </div>
+              }
+
             </div>
           </div>
         </div>

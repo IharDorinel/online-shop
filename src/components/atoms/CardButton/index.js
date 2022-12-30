@@ -1,10 +1,8 @@
 import {Component} from "react";
-
-import styles from './style.module.scss';
-import {setItemInCart} from "../../../store/reducers/cartReducer";
+import {removeItemFromCart, setItemInCart} from "../../../store/reducers/cartReducer";
 import {connect} from 'react-redux';
 import {store} from "../../../store";
-
+import styles from './style.module.scss';
 
 
 export class CardButton extends Component {
@@ -17,16 +15,31 @@ export class CardButton extends Component {
 
 
   handleClick = () => {
-    console.log(this.props.content)
-    store.dispatch(setItemInCart(this.props.content))
+    const { content, activeSize, activeColor, activeCapacity, activeUSB, activeID } = this.props
+
+    const isItemInCart = store.getState().cart.itemsInCart.some(el => el.id === content.id)
+
+    if(isItemInCart) {
+      store.dispatch(removeItemFromCart(content))
+    } else {
+      store.dispatch(setItemInCart({...content, activeSize: activeSize, activeColor: activeColor, activeCapacity: activeCapacity,
+        activeUSB: activeUSB, activeID: activeID}))
+    }
   }
 
 
-
   render() {
+    const { content } = this.props
+    const isItemInCart = store.getState().cart.itemsInCart.some(el => el.id === content.id)
 
     return (
-        <button className={styles.cardButton} onClick={this.handleClick}>ADD TO CART</button>
+        <button className={styles.cardButton} onClick={this.handleClick}>
+          {
+            isItemInCart ?
+                'REMOVE FROM CART'
+                : 'ADD TO CART'
+          }
+          </button>
     )
   }
 

@@ -20,62 +20,85 @@
     margin-top: 16px;
   }
 
-  .paramSizeCont {
-    @include flex(flex, flex-start, center, column);
-    margin-top: 43px;
+  .attrCont {
+    margin-top: 19px;
+
+    .paramAttrCont {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 24px;
 
 
-    .sizeCont {
-      @include flex(flex, center, center);
-      margin-top: 8px;
-
-      .size {
+      .attrCont {
         @include flex(flex, center, center);
-        @include dimensions(63px, 45px);
-        border: 1px solid $border;
-        margin-right: 12px;
+        margin-top: 8px;
+
+        .attr {
+          @include flex(flex, center, center);
+          @include dimensions(63px, 45px);
+          border: 1px solid $border;
+          margin-right: 12px;
+          cursor: pointer;
+        }
+
+        .activeAttr {
+          @include flex(flex, center, center);
+          @include dimensions(63px, 45px);
+          border: 1px solid $border;
+          margin-right: 12px;
+          background-color: #1D1F22;
+          color: white;
+          user-select: none;
+        }
       }
     }
-  }
 
-  .paramColorCont {
-    @include flex(flex, flex-start, center, column);
-    margin-top: 24px;
+    .paramColorCont {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 24px;
 
-    .colorCont {
-      @include flex(flex, center, center);
-      margin-top: 8px;
+      .colorCont {
+        @include flex(flex, center, center);
+        margin-top: 8px;
 
-      .color {
-        @include dimensions(32px, 32px);
-        margin-right: 8px;
+        .color {
+          @include dimensions(32px, 32px);
+          margin-right: 8px;
+          cursor: pointer;
+        }
+
+        .activeColor {
+          @include dimensions(32px, 32px);
+          margin-right: 8px;
+          outline: 1px solid $primary;
+        }
+
       }
 
     }
-  }
 
-  .paramPriceCont {
-    @include flex(flex, flex-start, center, column);
-    margin-top: 38px;
+    .paramPriceCont {
+      @include flex(flex, flex-start, center, column);
+      margin-top: 38px;
 
-    .price {
+      .price {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 18px;
+        padding: 10px 0;
+        margin-top: 10px;
+      }
+    }
+
+    .params {
+      font-family: 'Roboto Condensed', sans-serif;
       font-style: normal;
       font-weight: 700;
-      font-size: 24px;
+      font-size: 18px;
       line-height: 18px;
-      padding: 10px 0;
-      margin-top: 10px;
+      text-transform: uppercase;
     }
   }
-
-  .params {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 18px;
-  }
-
 
   .description {
     font-family: 'Roboto', sans-serif;

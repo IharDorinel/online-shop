@@ -10,12 +10,21 @@
     font-size: 42px;
     line-height: 160%;
     text-align: left;
+    text-transform: uppercase;
   }
 
   .contentGallery {
-    @include flex(flex, center, space-between, '', wrap);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(385px, 1fr));
+    grid-gap: 1rem;
     margin-top: 103px;
+  }
 
-
+  .cartImg {
+    @include dimensions(52px, 52px);
+    position: absolute;
+    right: 20px;
+    bottom: 80px;
+    z-index: 9;
   }
 }
