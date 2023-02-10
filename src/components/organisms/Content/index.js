@@ -7,7 +7,7 @@ export default class Content extends Component {
 
 
   render() {
-      const { content, category, currency, setId } = this.props
+      const { content, category, currency, setId, activeSize, setActiveSize, activeColor, setActiveColor, activeCapacity, setActiveCapacity, activeUSB, setActiveUSB, activeID, setActiveID } = this.props
 
     return (
         <section className={styles.content}>
@@ -20,6 +20,8 @@ export default class Content extends Component {
                                    currency={currency}
                                    setId={setId}
                                    key={item.id}
+                                   activeSize={activeSize} setActiveSize={setActiveSize} activeColor={activeColor} setActiveColor={setActiveColor} activeCapacity={activeCapacity}
+                                   setActiveCapacity={setActiveCapacity} activeUSB={activeUSB} setActiveUSB={setActiveUSB} activeID={activeID} setActiveID={setActiveID}
                       />
                   ))
             ))}

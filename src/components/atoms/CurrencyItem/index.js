@@ -17,7 +17,7 @@ export default class CurrencyItem extends Component {
     const { item, symbol, currency } = this.props
 
     return (
-        <div className={currency === item ? styles.currencyItemActive : styles.currencyItem} onClick={this.handleClick}>{symbol} {item}</div>
+        <div className={currency === item ? `${styles.currencyItem} ${styles.backgroundGrey}` : `${styles.currencyItem} ${styles.cursorPointer}`} onClick={this.handleClick}>{symbol} {item}</div>
     )
   }
 }

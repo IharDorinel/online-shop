@@ -3,12 +3,6 @@ import styles from "./style.module.scss";
 
 
 export default class ViewButton extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      handleClick: this.handleClick.bind(this)
-    }
-  }
 
   handleClick = () => {
     const { setCart } = this.props

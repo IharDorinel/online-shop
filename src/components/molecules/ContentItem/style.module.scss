@@ -19,7 +19,7 @@
 
       .contentImg {
         @include dimensions(355px, 330px);
-        object-fit: cover;
+        object-fit: contain;
         object-position: center;
       }
 
@@ -58,7 +58,7 @@
 
     .contentImg {
       @include dimensions(355px, 330px);
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
     }
 

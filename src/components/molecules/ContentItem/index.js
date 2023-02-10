@@ -1,7 +1,10 @@
 import {Component} from "react";
 import cart from '../../../images/Circle Icon.svg';
 import {store} from "../../../store";
-import {setItemInCart} from "../../../store/reducers/cartReducer";
+import {
+  increaseCount,
+  setItemInCart
+} from "../../../store/reducers/cartReducer";
 import OutOfStock from "../../atoms/OutOfStock";
 import styles from "../../molecules/ContentItem/style.module.scss";
 
@@ -12,7 +15,6 @@ export default class ContentItem extends Component {
     this.state = {
       cartImgVisible: false,
       handleHover: this.handleHover.bind(this),
-      id: this.props.item.id,
     }
   }
 
@@ -23,15 +25,32 @@ export default class ContentItem extends Component {
   handleClick = (e) => {
     const { item, setId} = this.props
     if(e.nativeEvent.target.className.includes('style_cartImg')) return;
-
-    if(item.inStock) {
-      setId(this.state.id)
-    }
+      setId(item.id)
   }
 
+
+
   addToCart = () => {
-    const { item } = this.props
-    store.dispatch(setItemInCart(item))
+    const { item, activeSize, activeColor, activeCapacity, activeUSB, activeID} = this.props
+
+
+    const contentItem = {...item,
+      activeSize: activeSize,
+      activeColor: activeColor,
+      activeCapacity: activeCapacity,
+      activeUSB: activeUSB,
+      activeID: activeID
+    }
+
+
+    const isItemInCart = store.getState().cart.itemsInCart.find(el => el.id === contentItem.id)
+
+    if (isItemInCart) {
+      store.dispatch(increaseCount(contentItem))
+    }
+    else {
+      store.dispatch(setItemInCart({...contentItem}))
+    }
   }
 
 
@@ -51,7 +70,7 @@ const currentCurrency = item.prices.filter(el => el.currency.label === currency)
             <figcaption>{currentCurrency[0].currency.symbol}{currentCurrency[0].amount}</figcaption>
           </div>
         </figure>
-            {this.state.cartImgVisible && item.inStock &&
+            {this.state.cartImgVisible && item.inStock && !item.attributes.length &&
                 <img src={cart} className={styles.cartImg} onClick={this.addToCart} alt={cart} />
             }
             {!item.inStock &&

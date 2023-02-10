@@ -1,7 +1,6 @@
 import {Component} from "react";
 import TotalOrder from "../../molecules/TotalOrder";
 import CartItem from "../../molecules/CartItem";
-import {store} from "../../../store";
 import arrow from "../../../images/arrow.png";
 import styles from './style.module.scss';
 
@@ -10,15 +9,18 @@ export default class Cart extends Component {
 
   render() {
 
-    const content = store.getState().cart.itemsInCart
-
-    const { currency, currSymbol, isCartOpen, closeCart} = this.props
+    const {content, currency, currSymbol, isCartOpen, closeCart, setStartPage} = this.props
 
     const count = content.map(el => ({
       id: el.id,
       price: el.prices.filter(el => el.currency.label === currency)[0].amount,
       symbol: el.prices.filter(el => el.currency.label === currency)[0].currency.symbol,
-      quantity: el.quantity
+      quantity: el.quantity,
+      activeSize: el.activeSize,
+      activeColor: el.activeColor,
+      activeCapacity: el.activeCapacity,
+      activeUSB: el.activeUSB,
+      activeID: el.activeID
     }))
 
     const totalQuantity = count.reduce((acc, el) => el.quantity + acc, 0)
@@ -31,7 +33,7 @@ export default class Cart extends Component {
     return (
         <div className={styles.cartContainer}>
           <a href="/">
-            <img src={arrow} className={styles.cartBack} alt={arrow}/>
+            <img src={arrow} className={styles.cartBack} onClick={setStartPage} alt={arrow}/>
           </a>
           <div className={styles.cartTitle}>CART</div>
                 {content.map(item => (

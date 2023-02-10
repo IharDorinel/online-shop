@@ -37,7 +37,6 @@
           @include dimensions(63px, 45px);
           border: 1px solid $border;
           margin-right: 12px;
-          cursor: pointer;
         }
 
         .activeAttr {
@@ -63,13 +62,13 @@
         .color {
           @include dimensions(32px, 32px);
           margin-right: 8px;
-          cursor: pointer;
+          outline: 1px solid $grey
         }
 
         .activeColor {
           @include dimensions(32px, 32px);
           margin-right: 8px;
-          outline: 1px solid $primary;
+          outline: 2px solid $primary;
         }
 
       }
@@ -98,6 +97,10 @@
       line-height: 18px;
       text-transform: uppercase;
     }
+  }
+
+  .cursorPointer {
+    cursor: pointer;
   }
 
   .description {

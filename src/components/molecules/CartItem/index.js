@@ -8,12 +8,7 @@ import {store} from "../../../store";
 import {
   decreaseCount,
   removeItemFromCart,
-  increaseCount,
-  setNewActiveSize,
-  setNewActiveColor,
-  setNewActiveCapacity,
-  setNewActiveUSB,
-  setNewActiveID
+  increaseCount
 } from "../../../store/reducers/cartReducer";
 import {cardDescription} from "../../../utils/constants";
 import styles from './style.module.scss';
@@ -31,13 +26,13 @@ export default class CartItem extends Component {
 
   increaseGoods = () => {
     const { item } = this.props
-    store.dispatch(increaseCount(item.id))
+    store.dispatch(increaseCount(item))
   }
 
 
   decreaseGoods = () => {
     const { item } = this.props
-    store.dispatch(decreaseCount(item.id))
+    store.dispatch(decreaseCount(item))
   }
 
   leftClick = () => {
@@ -62,25 +57,6 @@ export default class CartItem extends Component {
     }
   }
 
-  handleSizeClick = (sizeId, itemId) => {
-   store.dispatch(setNewActiveSize({sizeId: sizeId, itemId: itemId}))
-     }
-
-  handleColorClick = (colorId, itemId) => {
-   store.dispatch(setNewActiveColor({colorId: colorId, itemId: itemId}))
-  }
-
-  handleCapacityClick = (capId, itemId) => {
-    store.dispatch(setNewActiveCapacity({capId: capId, itemId: itemId}))
-  }
-
-  handleUSBClick = (USBId, itemId) => {
-    store.dispatch(setNewActiveUSB({USBId: USBId, itemId: itemId}))
-  }
-
-  handleIDClick = (IDId, itemId) => {
-    store.dispatch(setNewActiveID({IDId: IDId, itemId: itemId}))
-  }
 
   deleteProduct = (item) => {
     store.dispatch(removeItemFromCart(item))
@@ -99,11 +75,14 @@ export default class CartItem extends Component {
 
     const arrID = item.attributes.find(elem => elem.id === cardDescription.id)
 
-    const countGoods = count.filter(el => el.id === item.id)
+    const countGoods = count.filter(el => ((el.id === item.id) && (
+        (el.activeSize && el.activeSize === item.activeSize)
+    || (el.activeColor && el.activeCapacity && el.activeColor === item.activeColor && el.activeCapacity === item.activeCapacity)
+    || (el.activeCapacity && el.activeUSB && el.activeID && el.activeCapacity === item.activeCapacity && el.activeUSB === item.activeUSB && el.activeID === item.activeID)
+    || (!item.activeSize && !item.activeColor && !item.activeCapacity && !item.activeUSB && !item.activeID))
+    ))
 
     const countCost = item.prices.filter(el => el.currency.label === currency)[0]?.amount
-
-
 
     return (
 
@@ -120,7 +99,7 @@ export default class CartItem extends Component {
                     <div className={styles.attrCont}>
                       {item.attributes?.filter(el => el.name === cardDescription.size)[0].items.map(el => (
                         <div className={item.activeSize === el.id ? styles.activeAttr : styles.attr} key={el.id}
-                        onClick={() => this.handleSizeClick(el.id, item.id)}>{el.value}</div>
+                        >{el.value}</div>
                         ))}
                     </div>
                   </div>
@@ -131,7 +110,7 @@ export default class CartItem extends Component {
                 <div className={styles.colorCont}>
                   {item.attributes?.filter(el => el.name === cardDescription.color)[0].items.map(el => (
                   <div className={item.activeColor === el.id ? styles.activeColor : styles.color} style={{backgroundColor: el.value}} key={el.id}
-                       onClick={() => this.handleColorClick(el.id, item.id)}></div>
+                  ></div>
                   ))}
                 </div>
               </div>
@@ -142,7 +121,7 @@ export default class CartItem extends Component {
                 <div className={styles.attrCont}>
                   {item.attributes?.filter(el => el.name === cardDescription.capacity)[0].items.map(el => (
                       <div className={item.activeCapacity === el.id ? styles.activeAttr : styles.attr} style={{backgroundColor: el.value}} key={el.id}
-                           onClick={() => this.handleCapacityClick(el.id, item.id)}>{el.value}</div>
+                      >{el.value}</div>
                   ))}
                 </div>
               </div>
@@ -153,7 +132,7 @@ export default class CartItem extends Component {
                 <div className={styles.attrCont}>
                   {item.attributes?.filter(el => el.name === cardDescription.usb)[0].items.map(el => (
                       <div className={item.activeUSB === el.id ? styles.activeAttr : styles.attr} style={{backgroundColor: el.value}} key={el.id}
-                           onClick={() => this.handleUSBClick(el.id, item.id)}>{el.value}</div>
+                      >{el.value}</div>
                   ))}
                 </div>
               </div>
@@ -164,7 +143,7 @@ export default class CartItem extends Component {
                 <div className={styles.attrCont}>
                   {item.attributes?.filter(el => el.name === cardDescription.id)[0].items.map(el => (
                       <div className={item.activeID === el.id ? styles.activeAttr : styles.attr} style={{backgroundColor: el.value}} key={el.id}
-                           onClick={() => this.handleIDClick(el.id, item.id)}>{el.value}</div>
+                      >{el.value}</div>
                   ))}
                 </div>
               </div>
@@ -174,7 +153,7 @@ export default class CartItem extends Component {
               <img src={cross} className={isCartOpen ? styles.removeCross : styles.removeModalCross} onClick={() => this.deleteProduct(item)} alt={cross}/>
               <div className={isCartOpen ? styles.countCont : styles.countModalCont}>
                 <img src={plus} className={isCartOpen ? styles.plusMinus : styles.cartModalPlusMinus} onClick={this.increaseGoods} alt={plus}/>
-                <p>{countGoods[0].quantity}</p>
+                <p>{countGoods[0]?.quantity}</p>
                 <img src={minus} className={isCartOpen ? styles.plusMinus : styles.cartModalPlusMinus} onClick={this.decreaseGoods} alt={minus}/>
               </div>
               {item.gallery?.slice(this.state.start, this.state.end).map(item => (

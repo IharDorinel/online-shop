@@ -11,5 +11,12 @@
   color: white;
   border: none;
   margin-top: 20px;
+}
+
+.cursorPointer {
   cursor: pointer;
+}
+
+.disabledBtn {
+  background: $grey;
 }

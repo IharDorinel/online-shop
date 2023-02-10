@@ -15,8 +15,9 @@
 
   .contentGallery {
     display: grid;
-    grid-template-columns: repeat(4, minmax(385px, 1fr));
-    grid-gap: 1rem;
+    grid-template-columns: repeat(3, minmax(385px, 1fr));
+    grid-gap: 18rem;
+    place-items: center;
     margin-top: 103px;
   }
 

@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, current } from "@reduxjs/toolkit";
 
 
 const cartSlice = createSlice({
@@ -8,59 +8,22 @@ const cartSlice = createSlice({
   },
   reducers: {
     setItemInCart: (state, action) => {
-      if(!state.itemsInCart.find(el => el.id === action.payload.id))
       state.itemsInCart.push({...action.payload, quantity: 1, activeSize: action.payload.activeSize, activeColor: action.payload.activeColor,
         activeCapacity: action.payload.activeCapacity, activeUSB: action.payload.activeUSB, activeID: action.payload.activeID})
       localStorage.setItem('ID', JSON.stringify(state.itemsInCart))
     },
 
-    setNewActiveSize: (state, action) => {
-      state.itemsInCart = state.itemsInCart.map(item => {
-        if(item.id === action.payload.itemId) {
-          item.activeSize = action.payload.sizeId
-        }
-        return item
-      }
-    )},
-
-    setNewActiveColor: (state, action) => {
-      state.itemsInCart = state.itemsInCart.map(item => {
-        if(item.id === action.payload.itemId) {
-          item.activeColor = action.payload.colorId
-        }
-        return item
-      })
-    },
-
-    setNewActiveCapacity: (state, action) => {
-      state.itemsInCart = state.itemsInCart.map(item => {
-        if(item.id === action.payload.itemId) {
-          item.activeCapacity = action.payload.capId
-        }
-        return item
-      })
-    },
-
-    setNewActiveUSB: (state, action) => {
-      state.itemsInCart = state.itemsInCart.map(item => {
-        if(item.id === action.payload.itemId) {
-          item.activeUSB = action.payload.USBId
-        }
-        return item
-      })
-    },
-
-    setNewActiveID: (state, action) => {
-      state.itemsInCart = state.itemsInCart.map(item => {
-        if(item.id === action.payload.itemId) {
-          item.activeID = action.payload.IDId
-        }
-        return item
-      })
-    },
-
     removeItemFromCart: (state, action) => {
-      state.itemsInCart = state.itemsInCart.filter(item => item.id !== action.payload.id)
+      console.log(action.payload)
+      localStorage.setItem('ID', JSON.stringify(state.itemsInCart))
+      state.itemsInCart = current(state).itemsInCart
+          .filter(item => !((item.id === action.payload.id) && (
+                    (item.activeSize && item.activeSize === action.payload.activeSize)
+                    || (item.activeColor && item.activeCapacity && item.activeColor === action.payload.activeColor && item.activeCapacity === action.payload.activeCapacity)
+                    || (item.activeCapacity && item.activeUSB && item.activeID && item.activeCapacity === action.payload.activeCapacity && item.activeUSB === action.payload.activeUSB && item.activeID === action.payload.activeID)
+                    || (!item.activeSize && !item.activeColor && !item.activeCapacity && !item.activeUSB && !item.activeID)
+              )
+          ))
       localStorage.setItem('ID', JSON.stringify(state.itemsInCart))
     },
 
@@ -71,7 +34,13 @@ const cartSlice = createSlice({
 
     increaseCount: (state, action) => {
       state.itemsInCart = state.itemsInCart.map(item => {
-        if(item.id === action.payload) {
+        if((item.id === action.payload.id) && (
+        (item.activeSize && item.activeSize === action.payload.activeSize)
+        || (item.activeColor && item.activeCapacity && item.activeColor === action.payload.activeColor && item.activeCapacity === action.payload.activeCapacity)
+        || (item.activeCapacity && item.activeUSB && item.activeID && item.activeCapacity === action.payload.activeCapacity && item.activeUSB === action.payload.activeUSB && item.activeID === action.payload.activeID)
+        || (!item.activeSize && !item.activeColor && !item.activeCapacity && !item.activeUSB && !item.activeID)
+        )
+        ) {
           item.quantity += 1
         }
         return item
@@ -81,17 +50,21 @@ const cartSlice = createSlice({
 
     decreaseCount: (state, action) => {
       state.itemsInCart = state.itemsInCart.map(item => {
-        if(item.id === action.payload && item.quantity > 1) {
+        if((item.id === action.payload.id && item.quantity > 1) && (
+            (item.activeSize && item.activeSize === action.payload.activeSize)
+            || (item.activeColor && item.activeCapacity && item.activeColor === action.payload.activeColor && item.activeCapacity === action.payload.activeCapacity)
+            || (item.activeCapacity && item.activeUSB && item.activeID && item.activeCapacity === action.payload.activeCapacity && item.activeUSB === action.payload.activeUSB && item.activeID === action.payload.activeID)
+            || (!item.activeSize && !item.activeColor && !item.activeCapacity && !item.activeUSB && !item.activeID)
+        )
+        ) {
           item.quantity -= 1
         }
         return item
       })
       localStorage.setItem('ID', JSON.stringify(state.itemsInCart))
     }
-
-
   }
 })
 
-export const {setItemInCart, setNewActiveSize, setNewActiveColor, setNewActiveCapacity, setNewActiveUSB, setNewActiveID, removeItemFromCart, deleteItemsFromCart, increaseCount, decreaseCount} = cartSlice.actions;
+export const {setItemInCart, removeItemFromCart, deleteItemsFromCart, increaseCount, decreaseCount} = cartSlice.actions;
 export default cartSlice.reducer;

@@ -8,52 +8,127 @@ export default class ItemCardDescription extends Component {
 
 
   handleSizeClick = (value) => {
-    const { setActiveSize } = this.props
+    const {content, setActiveSize } = this.props
+    if(content.inStock) {
     setActiveSize(value)
+      localStorage.setItem('size', value)
+  }
   }
 
   handleColorClick = (value) => {
-    const { setActiveColor } = this.props
-    setActiveColor(value)
+    const {content, setActiveColor } = this.props
+    if(content.inStock) {
+      setActiveColor(value)
+      localStorage.setItem('color', value)
+    }
   }
 
   handleCapClick = (value) => {
-    const { setActiveCapacity } = this.props
+    const {content, setActiveCapacity } = this.props
+    if(content.inStock) {
     setActiveCapacity(value)
+      localStorage.setItem('capacity', value)
+    }
   }
 
   handleUSBClick = (value) => {
-    const { setActiveUSB } = this.props
+    const {content, setActiveUSB } = this.props
+    if(content.inStock) {
     setActiveUSB(value)
+      localStorage.setItem('USB', value)
+    }
   }
 
   handleIDClick = (value) => {
-    const { setActiveID } = this.props
+    const {content, setActiveID } = this.props
+    if(content.inStock) {
     setActiveID(value)
+      localStorage.setItem('attrID', value)
+    }
+  }
+
+  componentDidMount() {
+    const { content, setActiveSize, setActiveColor, setActiveCapacity, setActiveUSB, setActiveID } = this.props
+    const arrContent = content || []
+
+    if(content.inStock) {
+      const arrSize = arrContent?.attributes?.find(elem => elem?.id === cardDescription.size)
+      if (arrSize) {
+        if (localStorage.getItem('size')) {
+          setActiveSize(localStorage.getItem('size'))
+        } else {
+          const defaultValue = content.attributes.find(el => el.id === cardDescription.size).items[0].value
+          setActiveSize(defaultValue)
+        }
+      }
+
+      const arrColor = arrContent?.attributes?.find(elem => elem?.id === cardDescription.color)
+      if (arrColor) {
+        if (localStorage.getItem('color')) {
+          setActiveColor(localStorage.getItem('color'))
+        } else {
+          const defaultValue = content.attributes.find(el => el.id === cardDescription.color).items[0].displayValue
+          setActiveColor(defaultValue)
+        }
+      }
+
+      const arrCapacity = arrContent?.attributes?.find(elem => elem?.id === cardDescription.capacity)
+      if (arrCapacity) {
+        if (localStorage.getItem('capacity')) {
+          setActiveCapacity(localStorage.getItem('capacity'))
+        } else {
+          const defaultValue = content.attributes.find(el => el.id === cardDescription.capacity).items[0].value
+          setActiveCapacity(defaultValue)
+        }
+      }
+
+      const arrUSB = arrContent?.attributes?.find(elem => elem?.id === cardDescription.usb)
+      if (arrUSB) {
+        if (localStorage.getItem('USB')) {
+          setActiveUSB(localStorage.getItem('USB'))
+        } else {
+          const defaultValue = content.attributes.find(el => el.id === cardDescription.usb).items[0].value
+          setActiveUSB(defaultValue)
+        }
+      }
+
+      const arrID = arrContent?.attributes?.find(elem => elem?.id === cardDescription.id)
+      if (arrID) {
+        if (localStorage.getItem('attrID')) {
+          setActiveID(localStorage.getItem('attrID'))
+        } else {
+          const defaultValue = content.attributes.find(el => el.id === cardDescription.id).items[0].value
+          setActiveID(defaultValue)
+        }
+      }
+    }
+
   }
 
   render() {
-    const { content, currency, activeSize, activeColor, activeCapacity, activeUSB, activeID } = this.props
+    const { content, currency, activeSize, setActiveSize, activeColor, setActiveColor, activeCapacity, setActiveCapacity, activeUSB, setActiveUSB, activeID, setActiveID } = this.props
 
 
     const arrContent = content || []
 
-    const arrSize = arrContent[0]?.attributes?.find(elem => elem?.id === cardDescription.size)
+    const arrSize = arrContent?.attributes?.find(elem => elem?.id === cardDescription.size)
 
-    const arrColor = arrContent[0]?.attributes?.find(elem => elem?.id === cardDescription.color)
+    const arrColor = arrContent?.attributes?.find(elem => elem?.id === cardDescription.color)
 
-    const arrCapacity = arrContent[0]?.attributes?.find(elem => elem?.id === cardDescription.capacity)
+    const arrCapacity = arrContent?.attributes?.find(elem => elem?.id === cardDescription.capacity)
 
-    const arrUSB = arrContent[0]?.attributes?.find(elem => elem?.id === cardDescription.usb)
+    const arrUSB = arrContent?.attributes?.find(elem => elem?.id === cardDescription.usb)
 
-    const arrID = arrContent[0]?.attributes?.find(elem => elem?.id === cardDescription.id)
+    const arrID = arrContent?.attributes?.find(elem => elem?.id === cardDescription.id)
 
-    const currentCurrency = arrContent[0]?.prices.filter(el => el.currency.label === currency)
+    const currentCurrency = arrContent?.prices.filter(el => el.currency.label === currency)
+
+
 
     return (
         <div className={styles.ItemCardDescription}>
-        <div className={styles.titleName}>{content[0].brand}</div>
-        <div className={styles.titleType}>{content[0].name}</div>
+        <div className={styles.titleName}>{content.brand}</div>
+        <div className={styles.titleType}>{content.name}</div>
 
           <div className={styles.attrCont}>
             {arrSize &&
@@ -61,7 +136,7 @@ export default class ItemCardDescription extends Component {
               <div className={styles.params}>{cardDescription.size}:</div>
               <div className={styles.attrCont}>
                 {arrSize?.items.map(item => (
-                    <div className={activeSize === item.id ? styles.activeAttr : styles.attr} key={item.value} onClick={() => this.handleSizeClick(item.id)}>{item.value}</div>
+                    <div className={arrContent.inStock ? activeSize === item.id ? `${styles.activeAttr} ${styles.cursorPointer}` : `${styles.attr} ${styles.cursorPointer}` : `${styles.attr}`} key={item.value} onClick={() => this.handleSizeClick(item.id)}>{item.value}</div>
                 ))}
               </div>
             </div>
@@ -71,7 +146,7 @@ export default class ItemCardDescription extends Component {
               <div className={styles.params}>{cardDescription.color}:</div>
               <div className={styles.colorCont}>
                 {arrColor?.items.map(item => {
-                  return <div className={activeColor === item.id ? styles.activeColor : styles.color} style={{backgroundColor: item.value}} key={item.value}
+                  return <div className={arrContent.inStock ? activeColor === item.id ? `${styles.activeColor} ${styles.cursorPointer}` : `${styles.color} ${styles.cursorPointer}` : `${styles.color}`} style={{backgroundColor: item.value}} key={item.value}
                               onClick={() => this.handleColorClick(item.id)}></div>
                 })}
               </div>
@@ -82,7 +157,7 @@ export default class ItemCardDescription extends Component {
               <div className={styles.params}>{cardDescription.capacity}:</div>
               <div className={styles.attrCont}>
                 {arrCapacity?.items.map(item => {
-                  return <div className={activeCapacity === item.id ? styles.activeAttr : styles.attr} key={item.id}
+                  return <div className={arrContent.inStock ? activeCapacity === item.id ? `${styles.activeAttr} ${styles.cursorPointer}` : `${styles.attr} ${styles.cursorPointer}` : `${styles.attr}`} key={item.id}
                               onClick={() => this.handleCapClick(item.id)}>{item.value}</div>
                 })}
               </div>
@@ -93,7 +168,7 @@ export default class ItemCardDescription extends Component {
               <div className={styles.params}>{cardDescription.usb}:</div>
               <div className={styles.attrCont}>
                 {arrUSB?.items.map(item => {
-                  return <div className={activeUSB === item.id ? styles.activeAttr : styles.attr} key={item.id}
+                  return <div className={arrContent.inStock ? activeUSB === item.id ? `${styles.activeAttr} ${styles.cursorPointer}` : `${styles.attr} ${styles.cursorPointer}` : `${styles.attr}`} key={item.id}
                               onClick={() => this.handleUSBClick(item.id)}
                   >{item.value}</div>
                 })}
@@ -105,7 +180,7 @@ export default class ItemCardDescription extends Component {
               <div className={styles.params}>{cardDescription.id}:</div>
               <div className={styles.attrCont}>
                 {arrID?.items.map(item => {
-                  return <div className={activeID === item.id ? styles.activeAttr : styles.attr} key={item.id}
+                  return <div className={arrContent.inStock ? activeID === item.id ? `${styles.activeAttr} ${styles.cursorPointer}` : `${styles.attr} ${styles.cursorPointer}` : `${styles.attr}`} key={item.id}
                               onClick={() => this.handleIDClick(item.id)}
                   >{item.value}</div>
                 })}
@@ -119,8 +194,9 @@ export default class ItemCardDescription extends Component {
             </div>
           </div>
 
-          <CardButton content={content[0]} activeSize={activeSize} activeColor={activeColor} activeCapacity={activeCapacity} activeUSB={activeUSB} activeID={activeID}/>
-          <div dangerouslySetInnerHTML={{__html: content[0].description}} className={styles.description}/>
+          <CardButton content={arrContent} activeSize={activeSize} setActiveSize={setActiveSize} activeColor={activeColor} setActiveColor={setActiveColor} activeCapacity={activeCapacity}
+                      setActiveCapacity={setActiveCapacity} activeUSB={activeUSB} setActiveUSB={setActiveUSB} activeID={activeID} setActiveID={setActiveID}/>
+          <div dangerouslySetInnerHTML={{__html: content.description}} className={styles.description}/>
         </div>
     )
   }

@@ -13,7 +13,7 @@ export default class CartContainer extends Component {
 
   render() {
 
-    const { currencies, currency, currSymbol, setCurrency, showCurrModal, showCartModal, currModalVisible, cartModalVisible, closeCurrModal, setCart, closeCartModal } = this.props
+    const { content, currencies, currency, currSymbol, setCurrency, showCurrModal, showCartModal, currModalVisible, cartModalVisible, closeCurrModal, setCart, closeCartModal } = this.props
     const count = store.getState().cart.itemsInCart.reduce((acc, el) => el.quantity + acc, 0)
 
     return (
@@ -35,7 +35,7 @@ export default class CartContainer extends Component {
               <CurrencyModal currencies={currencies} currency={currency} closeCurrModal={closeCurrModal} setCurrency={setCurrency}/>
           }
           {cartModalVisible &&
-              <CartModal setCart={setCart} count={count} closeCartModal={closeCartModal} currency={currency} currSymbol={currSymbol}/>
+              <CartModal content={content} setCart={setCart} count={count} closeCartModal={closeCartModal} currency={currency} currSymbol={currSymbol}/>
           }
         </>
         )
