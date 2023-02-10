@@ -175,15 +175,8 @@ render() {
                           cartModalVisible={this.state.cartModalVisible} closeCurrModal={this.state.closeCurrModal}
                           closeCartModal={this.state.closeCartModal} setCart={this.state.setCart} categories={data.categories} setStartPage={this.state.setStartPage}/>
                   {this.state.contentVisible &&
-                      <Content
-                          content={data.categories}
-                          category={this.state.category}
-                          currency={this.state.currency}
-                          setId={this.state.setId}
-                          setActiveSize={this.state.setActiveSize} activeSize={this.state.activeSize} setActiveColor={this.state.setActiveColor} activeColor={this.state.activeColor}
-                          activeCapacity={this.state.activeCapacity} setActiveCapacity={this.state.setActiveCapacity}
-                          activeUSB={this.state.activeUSB} setActiveUSB={this.state.setActiveUSB}
-                          activeID={this.state.activeID} setActiveID={this.state.setActiveID}
+                      <Content content={data.categories} category={this.state.category} currency={this.state.currency} setId={this.state.setId} activeSize={this.state.activeSize} activeColor={this.state.activeColor}
+                          activeCapacity={this.state.activeCapacity} activeUSB={this.state.activeUSB} activeID={this.state.activeID}
                       />
                   }
                   {this.state.itemCardVisible &&
