@@ -14,7 +14,6 @@ const cartSlice = createSlice({
     },
 
     removeItemFromCart: (state, action) => {
-      console.log(action.payload)
       localStorage.setItem('ID', JSON.stringify(state.itemsInCart))
       state.itemsInCart = current(state).itemsInCart
           .filter(item => !((item.id === action.payload.id) && (
